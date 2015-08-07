@@ -8,11 +8,11 @@ This provides two-way UI bindings to marionette.js.
 
 Currently the fastest way to get a demo up and running is to do the following:
 
-  git clone https://github.com/kennydude/marionette-binding.git
-  cd marionette-binding
-  npm install
-  [sudo] npm install beefy
-  beefy demo.js
+    git clone https://github.com/kennydude/marionette-binding.git
+    cd marionette-binding
+    npm install
+    [sudo] npm install beefy
+    beefy demo.js
 
 Open a browser to http://localhost:9966/demo.html
 
