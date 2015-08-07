@@ -23,14 +23,19 @@ MarionetteBinding.BindingMixin = {
       // @ui.etc is dealt with
       if(el.indexOf("@ui.") == 0){
         el = this.ui[el.substr(4)];
+        if(el == undefined){
+          // keeps it working + choice by
+          // https://bocoup.com/weblog/jquery-fastest-way-to-select-nothing/
+          el = this.$(false);
+        }
       } else{ // everything else
-        el = $(el, this.$el);
+        el = this.$(el);
       }
 
       // Now we change based on what we asked to do
       if(type == "value" || type == "val"){
         // Initial Value
-        el.val(this.model.get(what));
+        el.val(function(){return self.model.get(what)});
 
         // Update
         var eventHandler = function(){
@@ -41,23 +46,23 @@ MarionetteBinding.BindingMixin = {
         // Listen to changes
         this.model.on("change:" + what, function(model, value, options){
           if(options['_sender'] == el) return; // Don't loop!
-          el.val(value);
+          el.val(function(){return self.model.get(what)});
         });
       } else if(type == "text"){
         // Initial Value
-        el.text(this.model.get(what));
+        el.text(function(){return self.model.get(what)});
 
         // Listen to changes
         this.model.on("change:" + what, function(model, value){
-          el.text(value);
+          el.text(function(){return self.model.get(what)});
         });
       } else if(type == "html"){
         // Initial Value
-        el.html(this.model.get(what));
+        el.html(function(){return self.model.get(what)});
 
         // Listen to changes
         this.model.on("change:" + what, function(model, value){
-          el.html(value);
+          el.html(function(){return self.model.get(what)});
         });
       } else{
         throw new Error("Binding type is not recognised")

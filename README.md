@@ -53,6 +53,13 @@ Now all you need is to setup the `bindings` hash like so:
 The keys on the binding work similar to triggers, but instead of events it's
 where you want the value to go.
 
+Also if you override `onRender` the bindings you will have to hook up bindings like so:
+
+    onRender: function(){
+      // .. other stuff ...
+      this.startBindings()
+    },
+
 ## Binding definition
 
 The definition is always:
@@ -70,7 +77,7 @@ How you want to bind can be one of the following:
 
 [The MIT License (MIT)](http://choosealicense.com/licenses/mit/)
 
-Copyright (c) [2015] [Joe Simpson]
+Copyright (c) 2015 Joe Simpson
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
