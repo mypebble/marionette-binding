@@ -1,6 +1,6 @@
 # Marionette.Binding.js
 
-![NPM](https://nodei.co/npm/marionette.binding.png)](https://npmjs.org/package/marionette.binding)
+[![NPM](https://nodei.co/npm/marionette.binding.png)](https://npmjs.org/package/marionette.binding)
 
 This provides two-way UI bindings to marionette.js.
 
