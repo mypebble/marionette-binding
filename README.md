@@ -1,5 +1,7 @@
 # Marionette.Binding.js
 
+[![Circle CI](https://circleci.com/gh/kennydude/marionette-binding.svg?style=svg)](https://circleci.com/gh/kennydude/marionette-binding)
+
 [![NPM](https://nodei.co/npm/marionette.binding.png)](https://npmjs.org/package/marionette.binding)
 
 This provides two-way UI bindings to marionette.js.

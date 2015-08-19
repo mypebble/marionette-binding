@@ -1,0 +1,8 @@
+framework: mocha+chai
+before_tests: browserify test/tests.js -o temp_tests.js
+on_exit: rm temp_tests.js
+serve_files:
+  - temp_tests.js
+src_files:
+  - test/*.js
+  - marionette.binding.js

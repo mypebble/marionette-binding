@@ -39,30 +39,31 @@ MarionetteBinding.BindingMixin = {
 
         // Update
         var eventHandler = function(){
+          console.log("trigger");
           self.model.set(what, el.val(), {_sender: el});
         };
-        el.on("keyup", eventHandler).on("change", eventHandler);
+        el.on("keyup", eventHandler).on("change", eventHandler).on("updated", eventHandler);
 
         // Listen to changes
         this.model.on("change:" + what, function(model, value, options){
           if(options['_sender'] == el) return; // Don't loop!
-          el.val(function(){return self.model.get(what)});
+          el.val(self.model.get(what));
         });
       } else if(type == "text"){
         // Initial Value
-        el.text(function(){return self.model.get(what)});
+        el.text(self.model.get(what));
 
         // Listen to changes
         this.model.on("change:" + what, function(model, value){
-          el.text(function(){return self.model.get(what)});
+          el.text(self.model.get(what));
         });
       } else if(type == "html"){
         // Initial Value
-        el.html(function(){return self.model.get(what)});
+        el.html(self.model.get(what));
 
         // Listen to changes
         this.model.on("change:" + what, function(model, value){
-          el.html(function(){return self.model.get(what)});
+          el.html(self.model.get(what));
         });
       } else{
         throw new Error("Binding type is not recognised")

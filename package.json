@@ -8,5 +8,16 @@
     "backbone.marionette": "^2.4.2",
     "jquery": "^2.1.4",
     "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "browserify": "^11.0.1",
+    "chai": "^3.2.0",
+    "mocha": "^2.2.5",
+    "sinon": "^1.15.4",
+    "testem": "^0.9.2"
+  },
+  "scripts": {
+    "testem": "testem",
+    "testem-ci": "testem ci"
   }
 }
