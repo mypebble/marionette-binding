@@ -18,6 +18,6 @@
   },
   "scripts": {
     "testem": "testem",
-    "testem-ci": "testem ci"
+    "test": "testem ci"
   }
 }

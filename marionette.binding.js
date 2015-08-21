@@ -39,10 +39,9 @@ MarionetteBinding.BindingMixin = {
 
         // Update
         var eventHandler = function(){
-          console.log("trigger");
           self.model.set(what, el.val(), {_sender: el});
         };
-        el.on("keyup", eventHandler).on("change", eventHandler).on("updated", eventHandler);
+        el.on("keyup", eventHandler).on("change", eventHandler).on("__updated", eventHandler);
 
         // Listen to changes
         this.model.on("change:" + what, function(model, value, options){

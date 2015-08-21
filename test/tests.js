@@ -3,13 +3,13 @@ var chai = require('chai');
 var sinon = require('sinon');
 
 describe('Inherited tests', function(){
-  beforeEach(function(){
+  before(function(){
     this.clock = sinon.useFakeTimers();
     $("<div>").attr("id", "content").appendTo("body");
     this.view = require('../demo.js');
   });
 
-  afterEach(function(){
+  after(function(){
     $("#content").remove();
     this.clock.restore();
   });
@@ -37,27 +37,27 @@ describe('Inherited tests', function(){
   });
 
   it('should allow me to change inputs', function(){
-    this.view.ui.text_2.val("Nowhere");
-    this.view.ui.text_2.triggerHandler('change');
+    this.view.ui.text_2.val("Nowhere").trigger('__updated');
     this.clock.tick(1000);
     chai.expect(this.view.model.get("place")).to.equal("Nowhere");
     chai.expect(this.view.ui.repeat_2.text()).to.equal("Nowhere");
 
-    this.view.ui.text.val("Me").triggerHandler('updated');
+    this.view.ui.text.val("Me").trigger('__updated');
     this.clock.tick(1500);
     chai.expect(this.view.model.get("name")).to.equal("Me");
     chai.expect(this.view.ui.repeat.text()).to.equal("Me");
   });
 });
 
+// TODO: Figure out if this can be reduced so no duplication
 describe('Mixin tests', function(){
-  beforeEach(function(){
+  before(function(){
     this.clock = sinon.useFakeTimers();
     $("<div>").attr("id", "content").appendTo("body");
     this.view = require('./mixin.demo.js');
   });
 
-  afterEach(function(){
+  after(function(){
     $("#content").remove();
     this.clock.restore();
   });
@@ -82,5 +82,17 @@ describe('Mixin tests', function(){
 
     chai.expect(this.view.ui.text.val()).to.equal("Bob");
     chai.expect(this.view.ui.repeat.text()).to.equal("Bob");
+  });
+
+  it('should allow me to change inputs', function(){
+    this.view.ui.text_2.val("Nowhere").trigger('__updated');
+    this.clock.tick(1000);
+    chai.expect(this.view.model.get("place")).to.equal("Nowhere");
+    chai.expect(this.view.ui.repeat_2.text()).to.equal("Nowhere");
+
+    this.view.ui.text.val("Me").trigger('__updated');
+    this.clock.tick(1500);
+    chai.expect(this.view.model.get("name")).to.equal("Me");
+    chai.expect(this.view.ui.repeat.text()).to.equal("Me");
   });
 });
