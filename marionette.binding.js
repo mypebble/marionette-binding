@@ -64,6 +64,22 @@ MarionetteBinding.BindingMixin = {
         this.model.on("change:" + what, function(model, value){
           el.html(self.model.get(what));
         });
+      } else if(type == "checked"){
+        // Update
+        el.on("click", function(e){
+          var tick = self.$(e.target);
+          self.model.set(what, tick.attr('value'), {_sender: el});
+        });
+
+        // Listen to changes
+        this.model.on("change:" + what, function(model, value, options){
+          if(options['_sender'] == el) return; // Don't loop!
+          el.each(function(){
+            if(self.$(this).attr("value") == value){
+              self.$(this).prop("checked", true);
+            }
+          });
+        }).trigger("change:" + what, this.model, this.model.get(what), {});
       } else{
         throw new Error("Binding type is not recognised")
       }
