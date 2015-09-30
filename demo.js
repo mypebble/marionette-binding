@@ -12,6 +12,8 @@ var DemoView = MarionetteBinding.BindedView.extend({
       <p>Hi <span id="repeat"></span></p>
       <input type="text" id="text_2" />
       <p>It sounds nice in <span id="repeat_2"></span> (html allowed on this one!)</p>
+      Tick: <input type="text" id="text_check" />
+      <p><input type="checkbox" name="check" class="check" /> paid</p>
       Tick: <input type="text" id="text_pick" />
       <p><input type="radio" name="pick_me2" class="pick2" value="ok" /> pick me</p>
       <p><input type="radio" name="pick_me2" class="pick2" value="no" /> no, pick me</p>
@@ -25,7 +27,9 @@ var DemoView = MarionetteBinding.BindedView.extend({
     "repeat_2": "#repeat_2",
     "pick": ".pick",
     "pick2": ".pick2",
-    "text_pick": "#text_pick"
+    "text_pick": "#text_pick",
+    "check": ".check",
+    "text_check": "#text_check"
   },
   bindings: {
     "value @ui.text": "name",
@@ -34,7 +38,9 @@ var DemoView = MarionetteBinding.BindedView.extend({
     "html @ui.repeat_2": "place",
     "checked @ui.pick": "pick",
     "checked @ui.pick2": "pick",
-    "value @ui.text_pick": "pick"
+    "value @ui.text_pick": "pick",
+    "value @ui.text_check": "check",
+    "checked @ui.check": "check"
   }
 });
 
@@ -45,7 +51,7 @@ var regions = new Marionette.RegionManager({
 });
 
 var view = new DemoView({
-  model: new Backbone.Model({name: "John", place: "The Well", pick: "ok"})
+  model: new Backbone.Model({name: "John", place: "The Well", pick: "ok", check: false})
 });
 regions.get("body").show(view);
 module.exports = view;

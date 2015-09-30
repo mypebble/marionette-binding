@@ -68,15 +68,25 @@ MarionetteBinding.BindingMixin = {
         // Update
         el.on("click", function(e){
           var tick = self.$(e.target);
-          self.model.set(what, tick.attr('value'), {_sender: el});
+          var type = tick.attr("type");
+          if(type == "radio"){
+            self.model.set(what, tick.attr('value'), {_sender: el});
+          } else if(type == "checkbox"){
+            self.model.set(what, tick.is(':checked'), {_sender: el});
+          }
         });
 
         // Listen to changes
         this.model.on("change:" + what, function(model, value, options){
           if(options['_sender'] == el) return; // Don't loop!
           el.each(function(){
-            if(self.$(this).attr("value") == value){
-              self.$(this).prop("checked", true);
+            var type = self.$(this).attr("type");
+            if(type == "checkbox"){
+              self.$(this).prop("checked", value);
+            } else if(type == "radio"){
+              if(self.$(this).attr("value") == value){
+                self.$(this).prop("checked", true);
+              }
             }
           });
         }).trigger("change:" + what, this.model, this.model.get(what), {});
