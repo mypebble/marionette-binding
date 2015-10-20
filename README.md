@@ -74,6 +74,7 @@ How you want to bind can be one of the following:
 - `text` is setting the text contents
 - `html` sets the innerHTML. **Warning:** This could be dangerous! [Don't use
   this ever on user-input unless you absolutely mean to](http://www.businessinsider.com/tweetdeck-major-security-vulnerability-twitter-2014-6?IR=T)
+* `checked` deals with with input radios or checkboxes
 
 ## License
 

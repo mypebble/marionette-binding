@@ -1,6 +1,10 @@
 var MarionetteBinding = {};
 
-var Marionette = require('backbone.marionette');
+if(window['Backbone'] && window['Marionette']){
+  var Marionette = Backbone.Marionette;
+} else{
+  var Marionette = require('backbone.marionette');
+}
 
 MarionetteBinding.BindingMixin = {
   bindings: {},
@@ -9,6 +13,11 @@ MarionetteBinding.BindingMixin = {
   },
 
   startBindings: function(){
+    if(!this.model){
+      // No model - no bindings!
+      return;
+    }
+
     var self = this;
     _.each(this.bindings, function(what, bind_to){
       // Split up the definition
@@ -85,7 +94,7 @@ MarionetteBinding.BindingMixin = {
               self.$(this).prop("checked", value);
             } else if(type == "radio"){
               if(self.$(this).attr("value") == value){
-                self.$(this).prop("checked", true);
+                self.$(this).get(0).checked = true;
               }
             }
           });
