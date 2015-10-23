@@ -12,14 +12,21 @@ MarionetteBinding.BindingMixin = {
     this.startBindings();
   },
 
-  startBindings: function(){
-    if(!this.model){
+  startBindings: function(model, bindings){
+    if(!model){
+      model = this.model;
+    }
+    if(!bindings){
+      bindings = this.bindings;
+    }
+
+    if(!model){
       // No model - no bindings!
       return;
     }
 
     var self = this;
-    _.each(this.bindings, function(what, bind_to){
+    _.each(bindings, function(what, bind_to){
       // Split up the definition
       var binding = bind_to.split(" ");
       if(binding.length != 2){
@@ -44,34 +51,34 @@ MarionetteBinding.BindingMixin = {
       // Now we change based on what we asked to do
       if(type == "value" || type == "val"){
         // Initial Value
-        el.val(function(){return self.model.get(what)});
+        el.val(function(){return model.get(what)});
 
         // Update
         var eventHandler = function(){
-          self.model.set(what, el.val(), {_sender: el});
+          model.set(what, el.val(), {_sender: el});
         };
         el.on("keyup", eventHandler).on("change", eventHandler).on("__updated", eventHandler);
 
         // Listen to changes
-        this.model.on("change:" + what, function(model, value, options){
+        model.on("change:" + what, function(model, value, options){
           if(options['_sender'] == el) return; // Don't loop!
-          el.val(self.model.get(what));
+          el.val(model.get(what));
         });
       } else if(type == "text"){
         // Initial Value
-        el.text(self.model.get(what));
+        el.text(model.get(what));
 
         // Listen to changes
-        this.model.on("change:" + what, function(model, value){
-          el.text(self.model.get(what));
+        model.on("change:" + what, function(model, value){
+          el.text(model.get(what));
         });
       } else if(type == "html"){
         // Initial Value
-        el.html(self.model.get(what));
+        el.html(model.get(what));
 
         // Listen to changes
-        this.model.on("change:" + what, function(model, value){
-          el.html(self.model.get(what));
+        model.on("change:" + what, function(model, value){
+          el.html(model.get(what));
         });
       } else if(type == "checked"){
         // Update
@@ -79,14 +86,14 @@ MarionetteBinding.BindingMixin = {
           var tick = self.$(e.target);
           var type = tick.attr("type");
           if(type == "radio"){
-            self.model.set(what, tick.attr('value'), {_sender: el});
+            model.set(what, tick.attr('value'), {_sender: el});
           } else if(type == "checkbox"){
-            self.model.set(what, tick.is(':checked'), {_sender: el});
+            model.set(what, tick.is(':checked'), {_sender: el});
           }
         });
 
         // Listen to changes
-        this.model.on("change:" + what, function(model, value, options){
+        model.on("change:" + what, function(model, value, options){
           if(options['_sender'] == el) return; // Don't loop!
           el.each(function(){
             var type = self.$(this).attr("type");
@@ -98,7 +105,7 @@ MarionetteBinding.BindingMixin = {
               }
             }
           });
-        }).trigger("change:" + what, this.model, this.model.get(what), {});
+        }).trigger("change:" + what, model, model.get(what), {});
       } else{
         throw new Error("Binding type is not recognised")
       }
