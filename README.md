@@ -1,6 +1,6 @@
 # Marionette.Binding.js
 
-[![Circle CI](https://circleci.com/gh/kennydude/marionette-binding.svg?style=svg)](https://circleci.com/gh/kennydude/marionette-binding)
+[![Circle CI](https://circleci.com/gh/mypebble/marionette-binding.svg?style=svg)](https://circleci.com/gh/mypebble/marionette-binding)
 
 [![NPM](https://nodei.co/npm/marionette.binding.png)](https://npmjs.org/package/marionette.binding)
 
