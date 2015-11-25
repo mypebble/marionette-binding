@@ -140,7 +140,8 @@ export class CheckedBinding extends Binding{
     this.change(null, this.val.get(), {});
   }
 
-  change(model, value, options){
+  change(model, wrong_value, options){
+    let value = this.val.get();
     if(options['_sender'] == this.element) return; // Don't loop!
     this.element.each((k, v) => {
       var type = this.$(v).attr("type");
