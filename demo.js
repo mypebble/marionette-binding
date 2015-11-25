@@ -40,6 +40,7 @@ var DemoView = MarionetteBinding.BindedView.extend({
     "value @ui.text": "name",
     "text @ui.repeat": "name",
     "value @ui.text_2": "place",
+    "disabled @ui.text_2": "place__isnull",
     "html @ui.repeat_2": "place",
     "checked @ui.text_2_is_null": "place__isnull",
     "checked @ui.pick": "pick",

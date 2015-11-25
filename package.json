@@ -1,6 +1,6 @@
 {
   "name": "marionette.binding",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Marionette.js bindings",
   "main": "lib/marionette.binding.js",
   "dependencies": {

@@ -122,6 +122,21 @@ export class HtmlBinding extends Binding {
   }
 }
 
+export class DisabledBinding extends Binding {
+  start(){
+    this.val.change(_.bind(this.change, this));
+    this.change();
+  }
+  
+  change(){
+    if(this.val.get() == true){
+      this.element.attr("disabled", "disabled");
+    } else{
+      this.element.removeAttr("disabled");
+    }
+  }
+}
+
 export class CheckedBinding extends Binding{
   start(){
     // Update
@@ -161,6 +176,7 @@ export let Bindings = {
   'text': TextBinding,
   'html': HtmlBinding,
   'checked': CheckedBinding,
+  'disabled': DisabledBinding,
 };
 
 export let BindingMixin = {
