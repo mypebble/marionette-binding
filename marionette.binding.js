@@ -1,3 +1,5 @@
+/* global _ */
+/* global Backbone */
 /**
 Marionette Binding
 
@@ -32,6 +34,31 @@ export class ModelValue {
   change(fn){
     this.model.on("change:" + this.key, fn);
   }
+}
+
+export class IsNullValue extends ModelValue {
+  constructor(model, key){
+      super(model, key);
+      this.oldValue = '';
+  }
+
+  get() {
+    return super.get() == null;
+  }
+
+  set(val, args){
+    if(val == true){
+      this.oldValue = super.get();
+      return super.set(null, args);
+    } else{
+      return super.set(this.oldValue, args);
+    }
+  }
+}
+
+export let ValueLookups = {
+  'eq': ModelValue,
+  'isnull': IsNullValue,
 }
 
 /*
@@ -102,14 +129,14 @@ export class CheckedBinding extends Binding{
       var tick = this.$(e.target);
       var type = tick.attr("type");
       if(type == "radio"){
-        this.val.set(tick.attr('value'), {_sender: el});
+        this.val.set(tick.attr('value'), {_sender: this.element});
       } else if(type == "checkbox"){
-        this.val.set(tick.is(':checked'), {_sender: el});
+        this.val.set(tick.is(':checked'), {_sender: this.element});
       }
     });
 
     // Listen to changes
-    this.val.change(this.change);
+    this.val.change(_.bind(this.change, this));
     this.change(null, this.val.get(), {});
   }
 
@@ -154,7 +181,6 @@ export let BindingMixin = {
       return;
     }
 
-    var self = this;
     _.each(bindings, function(what, bind_to){
       // Split up the definition
       let binding = bind_to.split(" ");
@@ -177,7 +203,18 @@ export let BindingMixin = {
         el = this.$(el);
       }
 
-      let val = new ModelValue(model, what);
+      let lookup = what.split('__');
+      let val = null;
+      if(lookup.length >= 2){
+        lookup = lookup[lookup.length-1];
+        if(!ValueLookups[lookup]){
+          throw new Error("Value lookup not found for " + lookup);
+        }
+        val = new ValueLookups[lookup](model,
+          what.substr(0, what.length - lookup.length - 2));
+      } else{
+        val = new ModelValue(model, what);
+      }
 
       if(Bindings[type]){
         let binding = new Bindings[type](el, val, _.bind(this.$, this));
