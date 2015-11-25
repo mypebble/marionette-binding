@@ -30,5 +30,3 @@ build/Release
 node_modules
 
 temp_tests.js
-
-lib/*
