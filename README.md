@@ -82,6 +82,7 @@ The `bind_to_what` value also accepts "lookups", which are modelled after
 [Django](https://docs.djangoproject.com/en/1.8/ref/models/querysets/#isnull). Currently available:
 
 - `isnull` returns true/false if the value is null or not
+- `not` returns the opposite value
 
 ## License
 

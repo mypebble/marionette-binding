@@ -56,9 +56,20 @@ export class IsNullValue extends ModelValue {
   }
 }
 
+export class NotValue extends ModelValue {
+  get() {
+    return !super.get();
+  }
+
+  set(val, args){
+    super.set(!val, args);
+  }
+}
+
 export let ValueLookups = {
   'eq': ModelValue,
   'isnull': IsNullValue,
+  'not': NotValue,
 }
 
 /*
