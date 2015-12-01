@@ -76,6 +76,7 @@ How you want to bind can be one of the following:
   this ever on user-input unless you absolutely mean to](http://www.businessinsider.com/tweetdeck-major-security-vulnerability-twitter-2014-6?IR=T)
 - `checked` deals with with input radios or checkboxes
 - `disabled` adds or removes the disabled attribute based on a true/false value
+- `visible` hides/shows based on true/false value
 
 The `bind_to_what` value also accepts "lookups", which are modelled after
 [Django](https://docs.djangoproject.com/en/1.8/ref/models/querysets/#isnull). Currently available:

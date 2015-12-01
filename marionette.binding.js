@@ -137,6 +137,21 @@ export class DisabledBinding extends Binding {
   }
 }
 
+export class VisibleBinding extends Binding {
+  start(){
+    this.val.change(_.bind(this.change, this));
+    this.change();
+  }
+  
+  change(){
+    if(this.val.get() == true){
+      this.element.hide();
+    } else{
+      this.element.show();
+    }
+  }
+}
+
 export class CheckedBinding extends Binding{
   start(){
     // Update
@@ -177,6 +192,7 @@ export let Bindings = {
   'html': HtmlBinding,
   'checked': CheckedBinding,
   'disabled': DisabledBinding,
+  'visible': VisibleBinding,
 };
 
 export let BindingMixin = {
