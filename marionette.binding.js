@@ -78,10 +78,11 @@ This deals with the binding and keeping it all up to date
 @abstract
 */
 export class Binding {
-  constructor(element, val, jQ){
+  constructor(element, val, jQ, args){
     this.element = element;
     this.val = val;
     this.$ = jQ;
+    this.args = args;
   }
 
   start(){
@@ -163,6 +164,25 @@ export class VisibleBinding extends Binding {
   }
 }
 
+export class ClassBinding extends Binding {
+  start(){
+    this.val.change(_.bind(this.change, this));
+    this.change();
+  }
+  
+  change(){
+    if(this.args){
+      if(this.val.get() == true){
+        this.element.addClass(this.args);
+      } else{
+        this.element.removeClass(this.args);
+      }
+    } else{
+      this.element.attr("class", this.val.get());
+    }
+  }
+}
+
 export class CheckedBinding extends Binding{
   start(){
     // Update
@@ -204,6 +224,7 @@ export let Bindings = {
   'checked': CheckedBinding,
   'disabled': DisabledBinding,
   'visible': VisibleBinding,
+  'class': ClassBinding,
 };
 
 export let BindingMixin = {
@@ -259,9 +280,15 @@ export let BindingMixin = {
       } else{
         val = new ModelValue(model, what);
       }
+      
+      let args = '';
+      if(type.indexOf(":") > 0){
+        args = type.substr(type.indexOf(":") + 1);
+        type = type.substr(0, type.indexOf(":"));
+      }
 
       if(Bindings[type]){
-        let binding = new Bindings[type](el, val, _.bind(this.$, this));
+        let binding = new Bindings[type](el, val, _.bind(this.$, this), args);
         binding.start();
       } else{
         throw new Error("Binding not found for " + type);

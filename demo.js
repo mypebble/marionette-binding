@@ -11,7 +11,7 @@ var DemoView = MarionetteBinding.BindedView.extend({
       <input type="text" id="text" />
       <p>Hi <span id="repeat"></span></p>
       <input type="text" id="text_2" />
-      <label>
+      <label id="text_2_label">
         <input type="checkbox" id="text_2_is_null" />
         Is Null
       </label>
@@ -29,6 +29,7 @@ var DemoView = MarionetteBinding.BindedView.extend({
     "repeat": "#repeat",
     "text_2": "#text_2",
     "text_2_is_null": "#text_2_is_null",
+    "text_2_label": "#text_2_label",
     "repeat_2": "#repeat_2",
     "pick": ".pick",
     "pick2": ".pick2",
@@ -47,7 +48,8 @@ var DemoView = MarionetteBinding.BindedView.extend({
     "checked @ui.pick2": "pick",
     "value @ui.text_pick": "pick",
     "value @ui.text_check": "check",
-    "checked @ui.check": "check"
+    "checked @ui.check": "check",
+    "class:active @ui.text_2_label": "place__isnull",
   }
 });
 

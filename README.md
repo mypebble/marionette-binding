@@ -77,6 +77,8 @@ How you want to bind can be one of the following:
 - `checked` deals with with input radios or checkboxes
 - `disabled` adds or removes the disabled attribute based on a true/false value
 - `visible` hides/shows based on true/false value
+- `class` will add/remove a class if used by `class:some_class` or set the class attribute
+  by whatever the value is
 
 The `bind_to_what` value also accepts "lookups", which are modelled after
 [Django](https://docs.djangoproject.com/en/1.8/ref/models/querysets/#isnull). Currently available:
